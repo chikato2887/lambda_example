@@ -5,6 +5,7 @@ export const handler = async (event) => {
 	let result = null;
 	let browser = null;
 	const questionId = event.queryStringParameters['id']
+	await chromium.font('https://raw.githack.com/minoryorg/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Medium.ttf');
 
 	try {
 		browser = await chromium.puppeteer.launch({
