@@ -18,8 +18,14 @@ export const handler = async (event) => {
 		let page = await browser.newPage();
 
     await page.goto(`https://ogp-test-site.vercel.app/og-image/questions/${questionId}`);
+		await page.waitForSelector("#ogp_image")
+		const ogpComponent = await page.$("#ogp_image")
+		
+		if (ogpComponent == null) {
+			throw new Error("ogp component is not shown")
+		}
 
-    result = await page.screenshot({fullPage: false, type: "png"})
+    result = await ogpComponent.screenshot({fullPage: false, type: "png", encoding: 'base64'})
 
 	} catch (error) {
 		return console.error("error has occured: ", error)
