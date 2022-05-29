@@ -1,0 +1,26 @@
+name: deploy to lambda
+on: [push]
+jobs:
+  deploy_source:
+    name: build and deploy lambda
+    strategy:
+      matrix:
+        node-version: [16.x]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: install depedencies
+        run: |
+          npm ci
+      - name: build and deploy
+        run: |
+          # compile ts to js
+          ./node_modules/.bin/ncc build src/index.ts -o ./dist
+          # zip js file
+          zip deploy.zip ./dist/*
+          # deploy function useing aws cli
+          aws lambda update-function-code --function-name=dynamic_og_image --zip-file=fileb://deploy.zip
