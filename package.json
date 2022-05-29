@@ -12,6 +12,12 @@
   "devDependencies": {
     "@types/aws-lambda": "^8.10.97",
     "@vercel/ncc": "^0.34.0",
+    "puppeteer": "^14.1.1",
+    "ts-node": "^10.8.0",
     "typescript": "^4.7.2"
+  },
+  "dependencies": {
+    "chrome-aws-lambda": "^10.1.0",
+    "puppeteer-core": "^14.1.1"
   }
 }
